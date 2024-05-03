@@ -1,0 +1,64 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    font-size: larger; /* ou você pode especificar um tamanho fixo, por exemplo, "24px" */
+}
+
+.painel {
+    overflow: auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute; /* Adicionado para permitir o posicionamento absoluto do botão */
+    width: 80vw;        /* 80% da largura da janela de visualização */
+    height: 80vh;       /* 80% da altura da janela de visualização */
+    z-index: 2;
+    border-radius: 10px; /* Adiciona bordas arredondadas */
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de opacidade */
+    z-index: 1; /* Colocar atrás do conteúdo da página */
+}
+
+.btn-acessar {
+    background-color: #007BFF; /* cor de fundo do botão */
+    border: none; /* retira bordas padrões */
+    color: white; /* cor do texto do botão */
+    padding: 10px 20px; /* espaço interno do botão */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px; /* bordas arredondadas */
+    position: absolute; /* Mudado de 'fixed' para 'absolute' */
+    bottom: 10px;
+    right: 10px;
+}
+
+.btn-acessar:hover {
+    background-color: #0056b3; /* cor de fundo do botão ao passar o mouse */
+    color: white; /* cor do texto ao passar o mouse */
+}
+
+#versao {
+    position: fixed;
+    bottom: 12px;
+    left: 10px;
+    color: #888; /* cor neutra */
+    font-size: 12px;
+    z-index: 3;
+}
