@@ -161,7 +161,7 @@ function search() {
                 .then(states => {
                     var promises = [];
                     states.forEach(s => {
-                        var url = '/' + system + '/searchv2?Uf=' + s;
+                        var url = 'https://pedromiguez-1-j2378520.deta.app/' + system + '/searchv2?Uf=' + s;
                         promises.push(fetch(url).then(res => res.json()));
                     });
                     // Aguarde todas as requisições serem concluídas
@@ -180,7 +180,7 @@ function search() {
                     });
                 });
         } else {
-            var searchURL = '/' + system + '/searchv2';
+            var searchURL = 'https://pedromiguez-1-j2378520.deta.app/' + system + '/searchv2';
             if (state !== '') {
                 searchURL += '?Uf=' + state;
             }
