@@ -67,7 +67,7 @@ function updateMarkers(wells, zoom) {
             var coordinates = well.Cordenadas.coordinates;
             var latLng = [coordinates[1], coordinates[0]];
             var marker = L.marker(latLng);
-            marker.bindPopup('<b>Código:</b> ' + well.Codigo + '<br><b>Localidade:</b> ' + well.Localidade + '<br><a href="/' + well.system + '/DetalhesPoco/' + well.Codigo + '" target="_blank">Ver detalhes do poço</a>');
+            marker.bindPopup('<b>Código:</b> ' + well.Codigo + '<br><b>Localidade:</b> ' + well.Localidade + '<br><a href="https://pedromiguez-1-j2378520.deta.app/' + well.system + '/DetalhesPoco/' + well.Codigo + '" target="_blank">Ver detalhes do poço</a>');
             markers.addLayer(marker);
             bounds.extend(latLng);
         }
