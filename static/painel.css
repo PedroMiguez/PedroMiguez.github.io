@@ -16,8 +16,8 @@ h2 {
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute; /* Adicionado para permitir o posicionamento absoluto do botão */
-    width: 60vw;        /* 80% da largura da janela de visualização */
-    height: 60vh;       /* 80% da altura da janela de visualização */
+    width: 65vw;        /* 80% da largura da janela de visualização */
+    height: 55vw;       /* 80% da altura da janela de visualização */
     z-index: 2;
     border-radius: 10px; /* Adiciona bordas arredondadas */
 }
