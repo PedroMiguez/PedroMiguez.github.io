@@ -85,7 +85,7 @@ clusterCheckbox.addEventListener('change', function() {
 
 
 // Carregar os sistemas
-fetch('https://pedromiguez-1-j2378520.deta.app//datasources')
+fetch('pedromiguez-1-j2378520.deta.app/datasources')
     .then(response => response.json())
     .then(sources => {
         sources.forEach(source => {
@@ -99,7 +99,7 @@ fetch('https://pedromiguez-1-j2378520.deta.app//datasources')
     });
 
     function loadStates(system) {
-        fetch('https://pedromiguez-1-j2378520.deta.app//' + system + '/states')
+        fetch('pedromiguez-1-j2378520.deta.app/' + system + '/states')
             .then(response => response.json())
             .then(states => {
                 stateSelect.innerHTML = '';
@@ -126,7 +126,7 @@ stateSelect.addEventListener('change', function() {
     var system = systemSelect.value;
     citySelect.innerHTML = '';
     if (state) {
-        fetch('https://pedromiguez-1-j2378520.deta.app//'+ system + '/cities?state=' + state)
+        fetch('pedromiguez-1-j2378520.deta.app/'+ system + '/cities?state=' + state)
             .then(response => response.json())
             .then(cities => {
                 cities.forEach(city => {
