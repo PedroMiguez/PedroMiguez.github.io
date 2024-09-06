@@ -62,3 +62,10 @@ h2 {
     font-size: 12px;
     z-index: 3;
 }
+.avisovermelho {
+    color: red; /* Define o texto na cor vermelha */
+    font-size: 20px; /* Tamanho da fonte maior */
+    font-weight: bold; /* Negrito para dar mais destaque */
+    text-align: center; /* Centraliza o texto */
+    margin-top: 20px; /* Adiciona uma margem superior */
+}
