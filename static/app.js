@@ -67,7 +67,7 @@ function updateMarkers(wells, zoom) {
             var coordinates = well.Cordenadas.coordinates;
             var latLng = [coordinates[1], coordinates[0]];
             var marker = L.marker(latLng);
-            marker.bindPopup('<b>Código:</b> ' + well.Codigo + '<br><b>Localidade:</b> ' + well.Localidade + '<br><a href="https://pedromiguez-1-j2378520.deta.app/' + well.system + '/DetalhesPoco/' + well.Codigo + '" target="_blank">Ver detalhes do poço</a>');
+            marker.bindPopup('<b>Código:</b> ' + well.Codigo + '<br><b>Localidade:</b> ' + well.Localidade + '<br><a href="http://pedromiguez.ddns.net:8000/' + well.system + '/DetalhesPoco/' + well.Codigo + '" target="_blank">Ver detalhes do poço</a>');
             markers.addLayer(marker);
             bounds.extend(latLng);
         }
@@ -85,7 +85,7 @@ clusterCheckbox.addEventListener('change', function() {
 
 
 // Carregar os sistemas
-fetch('https://pedromiguez-1-j2378520.deta.app/datasources')
+fetch('http://pedromiguez.ddns.net:8000/datasources')
     .then(response => response.json())
     .then(sources => {
         sources.forEach(source => {
@@ -99,7 +99,7 @@ fetch('https://pedromiguez-1-j2378520.deta.app/datasources')
     });
 
     function loadStates(system) {
-        fetch('https://pedromiguez-1-j2378520.deta.app/' + system + '/states')
+        fetch('http://pedromiguez.ddns.net:8000/' + system + '/states')
             .then(response => response.json())
             .then(states => {
                 stateSelect.innerHTML = '';
@@ -126,7 +126,7 @@ stateSelect.addEventListener('change', function() {
     var system = systemSelect.value;
     citySelect.innerHTML = '';
     if (state) {
-        fetch('https://pedromiguez-1-j2378520.deta.app/'+ system + '/cities?state=' + state)
+        fetch('http://pedromiguez.ddns.net:8000/'+ system + '/cities?state=' + state)
             .then(response => response.json())
             .then(cities => {
                 cities.forEach(city => {
@@ -156,12 +156,12 @@ function search() {
         document.getElementById('BotaoPesquisa').innerText = "Pesquisando";
         if (state === 'Todos') {
             // Se "Todos" foi selecionado, obtenha a lista de todos os estados e faça uma requisição para cada estado
-            fetch('https://pedromiguez-1-j2378520.deta.app/' + system + '/states')
+            fetch('http://pedromiguez.ddns.net:8000/' + system + '/states')
                 .then(response => response.json())
                 .then(states => {
                     var promises = [];
                     states.forEach(s => {
-                        var url = 'https://pedromiguez-1-j2378520.deta.app/' + system + '/searchv2?Uf=' + s;
+                        var url = 'http://pedromiguez.ddns.net:8000/' + system + '/searchv2?Uf=' + s;
                         promises.push(fetch(url).then(res => res.json()));
                     });
                     // Aguarde todas as requisições serem concluídas
@@ -180,7 +180,7 @@ function search() {
                     });
                 });
         } else {
-            var searchURL = 'https://pedromiguez-1-j2378520.deta.app/' + system + '/searchv2';
+            var searchURL = 'http://pedromiguez.ddns.net:8000/' + system + '/searchv2';
             if (state !== '') {
                 searchURL += '?Uf=' + state;
             }
