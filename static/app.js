@@ -67,7 +67,7 @@ function updateMarkers(wells, zoom) {
             var coordinates = well.Cordenadas.coordinates;
             var latLng = [coordinates[1], coordinates[0]];
             var marker = L.marker(latLng);
-            marker.bindPopup('<b>Código:</b> ' + well.Codigo + '<br><b>Localidade:</b> ' + well.Localidade + '<br><a href="https://pedromiguez.ddns.net/' + well.system + '/DetalhesPoco/' + well.Codigo + '" target="_blank">Ver detalhes do poço</a>');
+            marker.bindPopup('<b>Código:</b> ' + well.Codigo + '<br><b>Localidade:</b> ' + well.Localidade + '<br><a href="https://pedromiguez.com.br/apipocos/' + well.system + '/DetalhesPoco/' + well.Codigo + '" target="_blank">Ver detalhes do poço</a>');
             markers.addLayer(marker);
             bounds.extend(latLng);
         }
@@ -85,7 +85,7 @@ clusterCheckbox.addEventListener('change', function() {
 
 
 // Carregar os sistemas
-fetch('https://pedromiguez.ddns.net/datasources')
+fetch('https://pedromiguez.com.br/apipocos/datasources')
     .then(response => response.json())
     .then(sources => {
         sources.forEach(source => {
@@ -99,7 +99,7 @@ fetch('https://pedromiguez.ddns.net/datasources')
     });
 
     function loadStates(system) {
-        fetch('https://pedromiguez.ddns.net/' + system + '/states')
+        fetch('https://pedromiguez.com.br/apipocos/' + system + '/states')
             .then(response => response.json())
             .then(states => {
                 stateSelect.innerHTML = '';
@@ -126,7 +126,7 @@ stateSelect.addEventListener('change', function() {
     var system = systemSelect.value;
     citySelect.innerHTML = '';
     if (state) {
-        fetch('https://pedromiguez.ddns.net/'+ system + '/cities?state=' + state)
+        fetch('https://pedromiguez.com.br/apipocos/'+ system + '/cities?state=' + state)
             .then(response => response.json())
             .then(cities => {
                 cities.forEach(city => {
@@ -156,12 +156,12 @@ function search() {
         document.getElementById('BotaoPesquisa').innerText = "Pesquisando";
         if (state === 'Todos') {
             // Se "Todos" foi selecionado, obtenha a lista de todos os estados e faça uma requisição para cada estado
-            fetch('https://pedromiguez.ddns.net/' + system + '/states')
+            fetch('https://pedromiguez.com.br/apipocos/' + system + '/states')
                 .then(response => response.json())
                 .then(states => {
                     var promises = [];
                     states.forEach(s => {
-                        var url = 'https://pedromiguez.ddns.net/' + system + '/searchv2?Uf=' + s;
+                        var url = 'https://pedromiguez.com.br/apipocos/' + system + '/searchv2?Uf=' + s;
                         promises.push(fetch(url).then(res => res.json()));
                     });
                     // Aguarde todas as requisições serem concluídas
@@ -180,7 +180,7 @@ function search() {
                     });
                 });
         } else {
-            var searchURL = 'https://pedromiguez.ddns.net/' + system + '/searchv2';
+            var searchURL = 'https://pedromiguez.com.br/apipocos/' + system + '/searchv2';
             if (state !== '') {
                 searchURL += '?Uf=' + state;
             }
