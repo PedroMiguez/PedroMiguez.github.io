@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exportação de Poços</title>
+  <link href="css/common.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/export.css">
+</head>
+<body>
+    <!-- Loading Overlay geral -->
+  <div id="export-loading-overlay" class="hidden">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <p class="loading-text">
+        Carregando dados para exportação…<br/>
+        🚧 Se houver muitos registros, pode demorar alguns instantes.
+      </p>
+    </div>
+  </div>
+  <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Mostrar opções">
+    ☰
+  </button>
+  <div class="export-container">
+    <!-- Sidebar de opções -->
+        <!-- Sidebar de opções -->
+    <aside class="export-sidebar">
+      <h2>Opções de Exportação</h2>
+
+      <section class="options-section">
+        <h3>Campos Gerais</h3>
+        <form id="fields-form" class="checkbox-grid"></form>
+      </section>
+
+      <section class="options-section">
+        <h3>Análises Químicas
+          <select id="analysis-select" class="discrete-select">
+            <option value="recent" selected>Mais recente</option>
+            <option value="oldest">Mais antigo</option>
+            <option value="average">Média</option>
+            <option value="max">Maior</option>
+            <option value="min">Menor</option>
+          </select>
+        </h3>
+        <form id="analyses-form" class="checkbox-grid"></form>
+      </section>
+
+      <section class="options-section">
+        <h3>Teste de Bombeamento
+          <select id="bombeamento-select" class="discrete-select">
+            <option value="recent" selected>Mais recente</option>
+            <option value="oldest">Mais antigo</option>
+          </select>
+        </h3>
+        <form id="bombeamento-form" class="checkbox-grid"></form>
+      </section>
+
+
+    </aside>
+
+
+    <!-- Área de pré-visualização -->
+    <main class="export-main">
+      <div class="preview-controls">
+              <h2>Pré-visualização</h2>
+  <select id="preview-limit" class="discrete-select">
+    <option value="10">10</option>
+    <option value="20" selected>20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="all">Todos</option>
+  </select>
+</div>
+      <div id="preview-table" class="preview-table"></div>
+
+     <!-- botão Exportar agora fica aqui -->
+     <div class="export-actions">
+       <button id="export-btn" class="btn btn-primary">Exportar XLSX</button>
+    </div>
+    </main>
+  </div>
+
+  <!-- Biblioteca para XLSX + nosso script -->
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/export.js"></script>
+</body>
+</html>

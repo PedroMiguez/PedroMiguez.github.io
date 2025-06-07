@@ -1,0 +1,74 @@
+/* ------------------------------- */
+/* 2.1) Sidebar oculta por padrão  */
+/* ------------------------------- */
+@media (max-width: 768px) {
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;       /* 80% da largura */
+    max-width: 300px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform var(--transition-speed) ease-in-out;
+    z-index: 1000;
+  }
+  /* quando tiver a classe `collapsed`, exibe */
+  #sidebar:not(.collapsed) {
+    transform: translateX(0);
+  }
+
+  /* Ajuste do main-area para largura total */
+  #main-area {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Ajuste do botão de toggle para não cobrir o conteúdo */
+  #sidebar-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;           /* dentro da viewport, canto superior direito */
+    z-index: 1100;
+    width: auto;           /* ajusta largura ao conteúdo */
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  body:not(.sidebar-collapsed) #sidebar-toggle {
+    left: 10px;
+    width: calc(var(--sidebar-width)*0.8);
+}
+
+  /* Resumo de pesquisa em full width com padding */
+  #search-summary {
+    position: fixed;
+    left: 10px;
+    width: calc(100% - 20px);
+    /* Usa env() com fallback para browsers que não suportam */
+    bottom: calc(env(safe-area-inset-bottom, 10px) + 10px);
+    z-index: 1050;
+  }
+
+  /* Filtros empilhados verticalmente */
+  .filter-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .filter-row label,
+  .filter-row .remove-row-btn {
+    width: 100%;
+    margin: 4px 0;
+  }
+}
+
+/* ----------------------------------- */
+/* 2.2) Ajustes para telas muito pequenas */
+/* ----------------------------------- */
+@media (max-width: 480px) {
+  h1, h2, h3 { font-size: 1.2em; }
+  button { padding: 8px 12px; font-size: 14px; }
+  select, input { padding: 8px; font-size: 14px; }
+}

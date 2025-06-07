@@ -1,12 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=https://pedromiguez.com.br/brgwdatasync/mapa/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecionando...</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapa de Poços BRGW-Datasync</title>
+    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
+    <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" rel="stylesheet" />
+    <link href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" rel="stylesheet" />
+    <link href="css/common.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/responsive.css" rel="stylesheet"/>
 </head>
 <body>
-  <p>Redirecionando para <a href="https://pedromiguez.com.br/brgwdatasync/mapa/">https://pedromiguez.com.br/brgwdatasync/mapa/</a></p>
+      <!-- Splash Screen -->
+  <div id="splash-overlay">
+    <div class="splash-box">
+      <h1>BRGWDatasync</h1>
+      <p>O Sistema reúne dados hidrogeológicos e hidroquímicos, com o objetivo de facilitar o acesso e melhorar a gestão de águas subterrâneas. Estamos continuamente trabalhando para agregar mais dados e aprimorar as funcionalidades das nossas soluções. Para enviar sugestões, fazer questionamentos ou reportar problemas, entre em contato conosco pelo e-mail: <a href="mailto:pedro.h.miguez@gmail.com">pedro.h.miguez@gmail.com</a>.</p>
+      <p>O sistema pode apresentar instabilidades</p>
+      <button id="splash-enter" class="primary-action-btn">Acessar Sistema</button>
+      <div class="splash-version">Beta 1.0.0.1</div>
+    </div>
+  </div>
+    <div id="app-container">
+
+        <button id="sidebar-toggle" aria-label="Alternar painel de filtros" title="Alternar Painel de Filtros">
+            {/* Conteúdo (☰ ou "Ocultar Menu") será definido por JavaScript */}
+        </button>
+
+        <div id="sidebar">
+            <div class="sidebar-header">
+                <h2>Filtros</h2>
+            </div>
+            <div class="sidebar-content">
+                 <details open class="filter-section">
+                    <summary>Geral</summary>
+                    <label>Sistema<select id="sistema"></select></label>
+                    <label>Estado (UF)<select id="uf"></select></label>
+                    <label>Município<select id="mun"></select></label>
+                    <label>Bacia<select id="bacia"></select></label>
+                    <label>Sub-bacia<select id="subbacia"></select></label>
+                </details>
+                <details class="filter-section">
+                    <summary>Química</summary>
+                    <div id="quim-container" class="dynamic-filter-container"></div>
+                    <button id="add-quim" class="add-criteria-btn">+ critério químico</button>
+                </details>
+                <details class="filter-section">
+                    <summary>Hidrológico</summary>
+                    <div id="hidro-container" class="dynamic-filter-container"></div>
+                    <button id="add-hidro" class="add-criteria-btn">+ critério hidro</button>
+                </details>
+                <button id="buscar" class="primary-action-btn">Buscar Poços</button>
+            </div>
+        </div>
+
+        <div id="main-area">
+            <div id="map"></div>
+            <div id="search-summary" class="hidden">
+                <div class="summary-header">
+                    <h3>Resumo da Pesquisa</h3>
+                    <button id="close-summary" title="Fechar Resumo">×</button>
+                </div>
+                <div id="summary-content">
+                    {/* Conteúdo preenchido por JS */}
+                </div>
+                <button id="export-search" class="secondary-action-btn">Exportar Poços</button>
+            </div>
+        </div>
+
+    </div>
+
+
+      <!-- Loading Overlay -->
+  <div id="loading-overlay" class="hidden">
+    <div class="loading-box">
+      <!-- Aqui pode trocar pelo seu SVG/PNG/art -->
+      <div class="spinner"></div>
+      <p class="loading-text">
+        Pesquisando...<br/>
+        🚧 Pesquisas em nível estadual e federal podem demorar alguns instantes.
+      </p>
+    </div>
+  </div>
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

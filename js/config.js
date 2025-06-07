@@ -1,0 +1,1 @@
+const API_BASE_URL = "https://pedromiguez.com.br/apipocos"; // Your API base URL

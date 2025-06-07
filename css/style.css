@@ -1,0 +1,363 @@
+:root {
+  --bg-main: #f5f5f5;
+  --bg-sidebar: #fff;
+  --bg-element: #fff;
+  --bg-details: #f5f5f5;
+  --border-color: #dddddd;
+  --fg-main: #333;
+  --fg-muted: #777;
+  --accent-color: #03a9f4;
+  --accent-hover: #028dc8;
+  --danger-color: #cf6679;
+  --danger-hover: #b00020;
+
+  --sidebar-width: 350px;
+  --sidebar-padding-internal: 15px;
+  --sidebar-toggle-size: 40px;
+  --sidebar-toggle-margin: 10px;
+  --sidebar-toggle-text-padding: 15px;
+  --summary-panel-width: 420px;
+  --summary-max-height: 200px;
+  --border-radius: 6px;
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --transition-speed: 0.3s;
+}
+
+/* === ESTRUTURA BASE E DO APP === */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-main);
+  background-color: var(--bg-main);
+  color: var(--fg-main);
+  overflow: hidden;
+}
+
+#app-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+/* === SIDEBAR === */
+#sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--bg-sidebar);
+  z-index: 900;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: margin-left var(--transition-speed) ease-in-out;
+  margin-left: 0;
+}
+
+#sidebar.collapsed {
+  margin-left: calc(-1 * var(--sidebar-width));
+}
+
+.sidebar-header {
+  padding: var(--sidebar-padding-internal);
+  padding-bottom: 0;
+  padding-top: 70px;
+}
+.sidebar-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  color: var(--accent-color);
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-content {
+  padding: var(--sidebar-padding-internal);
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+/* === BOTÃO DE ALTERNÂNCIA DA SIDEBAR === */
+#sidebar-toggle {
+  position: fixed;
+  top: var(--sidebar-toggle-margin);
+  height: var(--sidebar-toggle-size);
+  z-index: 1010;
+  background-color: var(--accent-color);
+  color: var(--bg-main);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: left var(--transition-speed) ease-in-out,
+              width var(--transition-speed) ease-in-out,
+              padding var(--transition-speed) ease-in-out,
+              font-size var(--transition-speed) ease-in-out,
+              background-color var(--transition-speed) ease-in-out;
+  padding: 0 var(--sidebar-toggle-text-padding);
+  font-size: 15px;
+}
+#sidebar-toggle:hover {
+  background-color: var(--accent-hover);
+}
+
+body:not(.sidebar-collapsed) #sidebar-toggle {
+  left:10px;
+  width: calc(var(--sidebar-width) - 20px);
+}
+
+body.sidebar-collapsed #sidebar-toggle {
+  left: var(--sidebar-toggle-margin);
+  width: var(--sidebar-toggle-size);
+  padding: 0;
+  font-size: calc(var(--sidebar-toggle-size) * 0.6);
+}
+
+/* === ÁREA PRINCIPAL (MAPA + RESUMO) === */
+#main-area {
+  flex-grow: 1;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-main);
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+/* === PAINEL DE RESUMO DA PESQUISA === */
+#search-summary {
+  position: absolute;
+  bottom: var(--sidebar-padding-internal);
+  left: var(--sidebar-padding-internal);
+  width: var(--summary-panel-width);
+  max-width: calc(100% - (2 * var(--sidebar-padding-internal)));
+  background-color: var(--bg-sidebar);
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(0,0,0,0.07);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  padding: var(--sidebar-padding-internal);
+  max-height: var(--summary-max-height);
+  overflow-y: auto;
+  transform: translateY(0);
+  transition: transform var(--transition-speed) ease-in-out,
+              opacity var(--transition-speed) ease-in-out;
+  opacity: 1;
+}
+
+#search-summary.hidden {
+  transform: translateY(calc(100% + var(--sidebar-padding-internal) + 20px));
+  opacity: 0;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.summary-header h3 { margin: 0; font-size: 16px; color: var(--accent-color); }
+#close-summary {
+  background: none; border: none; color: var(--fg-muted); font-size: 24px; font-weight: bold;
+  padding: 0 5px; margin: 0; width: auto; height: auto; line-height: 1; cursor: pointer;
+}
+#close-summary:hover { color: var(--accent-color); }
+
+#summary-content p { margin: 8px 0; font-size: 14px; line-height: 1.5; }
+#summary-content strong { color: var(--fg-muted); min-width: 170px; display: inline-block; }
+#summary-filters-list { display: none; }
+
+
+/* === ESTILOS GERAIS (Inputs, Botões de filtro, etc.) === */
+.filter-section { margin-bottom: var(--sidebar-padding-internal); background-color: var(--bg-details); border: 1px solid var(--border-color); border-radius: var(--border-radius); padding: var(--sidebar-padding-internal); }
+.filter-section summary { cursor: pointer; font-weight: bold; padding-bottom: 5px; margin-bottom: 5px; color: var(--fg-main); outline: none; }
+.filter-section summary:hover { color: var(--accent-color); }
+label { display: block; margin-top: 8px; margin-bottom: 4px; font-size: 13px; color: var(--fg-muted); }
+select, input[type="number"], input[type="text"],input[type="date"]  { width: 100%; padding: 10px; border-radius: var(--border-radius); border: 1px solid var(--border-color); background-color: var(--bg-element); color: var(--fg-main); box-sizing: border-box; }
+select:focus, input[type="number"]:focus, input[type="text"],input[type="date"] :focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 2px rgba(3, 169, 244, 0.15); }
+button { padding: 10px 15px; margin-top: 10px; border: none; border-radius: var(--border-radius); font-weight: bold; cursor: pointer; transition: background-color 0.2s, color 0.2s; width: 100%; box-sizing: border-box; background-color: var(--bg-element); color: var(--fg-main); }
+button:hover:not(#sidebar-toggle):not(#close-summary):not(.primary-action-btn):not(.secondary-action-btn):not(.remove-row-btn) { background-color: #f0f0f0; }
+.add-criteria-btn { background-color: transparent; color: var(--accent-color); border: 1px dashed var(--accent-color); margin-top: var(--sidebar-padding-internal); }
+.add-criteria-btn:hover { background-color: rgba(3, 169, 244, 0.07); color: var(--accent-hover); }
+.primary-action-btn { background-color: var(--accent-color); color: #fff; font-size: 16px; margin-top: 20px; }
+.primary-action-btn:hover { background-color: var(--accent-hover); }
+.secondary-action-btn { background-color: var(--bg-element); color: var(--accent-color); border: 1px solid var(--accent-color); }
+.secondary-action-btn:hover { background-color: var(--accent-color); color: #fff; }
+.remove-row-btn { width: auto; padding: 4px 8px; background-color: var(--danger-color); color: var(--fg-main); font-size: 12px; margin-left: auto; }
+.remove-row-btn:hover { background-color: var(--danger-hover); }
+.dynamic-filter-container { margin-top: 10px; }
+.filter-row { padding: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); border-radius: var(--border-radius); background-color: #fafbfc; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; }
+.filter-row label { margin-top: 0; flex: 1 1 150px; }
+
+
+/* ===========================
+   Zoom Leaflet no mesmo formato
+   do botão de menu azul
+   =========================== */
+.leaflet-control-zoom {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  position: absolute !important;
+  top: 55px !important;   /* ajuste para alinhar */
+  left: 1px !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  z-index: 1000;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 38px !important;          /* mesma largura do menu */
+  height: 38px !important;         /* mesma altura do menu */
+  margin: 5px 0 !important;
+  border-radius: 10px !important;  /* mesmo border-radius do menu */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.16) !important;
+  background-color: #03a9f4 !important; /* azul inicial */
+  color: #fff !important;
+  font-size: 24px !important;      /* ajuste se quiser o + maior/menor */
+  font-weight: bold !important;
+  padding: 0 !important;
+  text-decoration: none !important;
+  border: none !important;
+  transition: background-color 0.15s, color 0.15s, transform 0.1s;
+  cursor: pointer;
+}
+
+/* Inverte no clique (active) */
+.leaflet-control-zoom-in:active,
+.leaflet-control-zoom-out:active {
+  background-color: #fff !important;     /* fundo branco */
+  color: #03a9f4 !important;             /* ícone azul */
+  transform: scale(0.95) !important;
+}
+
+/* === OVERLAY DE LOADING === */
+#loading-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+#loading-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#loading-overlay .loading-box {
+  background: var(--bg-sidebar);
+  padding: 20px 30px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#loading-overlay .spinner {
+  margin: 0 auto 15px;
+  width: 40px; height: 40px;
+  border: 4px solid var(--accent);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+#loading-overlay .loading-text {
+  color: var(--fg-main);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* Se já não tiver em seu CSS: */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* garante que o E/OU fique colado à direita no fim */
+.filter-row .eou-group {
+  order: 99;
+  flex: 0 0 80px;
+  align-self: flex-start;
+  margin-left: auto;
+}
+
+/* faz o label de Data virar coluna com espaçamento */
+.filter-row .label-data {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;           /* você pode ajustar o valor para mais/menos */
+}
+
+/* opcional: se quiser fixar largura deste bloco */
+.filter-row .label-data {
+  flex: 1 1 200px;    /* ou o valor que funcionar melhor no seu layout */
+}
+
+/* === SPLASH SCREEN === */
+#splash-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+#splash-overlay.hidden {
+  display: none;
+}
+
+#splash-overlay .splash-box {
+  background: var(--bg-sidebar);
+  padding: 10px 10px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  max-width: 500px;
+}
+#splash-overlay .splash-box h1 {
+  margin: 0 0 12px;
+  font-size: 26px;
+  color: var(--accent-color);
+}
+#splash-overlay .splash-box p {
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--fg-main);
+}
+/* versão dentro do card, cantinho inferior direito */
+#splash-overlay .splash-box .splash-version {
+  position: relative;
+  top: 8px;
+  bottom: 2px;
+  right: 4px;
+  font-size: 10px;
+  color: var(--fg-muted);
+  user-select: none;
+  pointer-events: none;
+  text-align: left;
+}

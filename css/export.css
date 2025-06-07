@@ -1,0 +1,285 @@
+.export-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  width: 100%;
+  height: 100vh;
+}
+.export-sidebar {
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 20px 16px 16px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.export-sidebar h2 {
+  font-size: 1.3em;
+  margin-bottom: 14px;
+  border-bottom: 1.5px solid var(--border);
+  padding-bottom: 8px;
+  color: var(--accent);
+}
+.options-section {
+  margin-bottom: 22px;
+}
+.options-section h3 {
+  font-size: 1em;
+  margin-bottom: 7px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px 10px;
+}
+.checkbox-grid label {
+  font-size: 0.98em;
+  display: flex;
+  align-items: center;
+  color: var(--fg-muted);
+}
+.checkbox-grid input { margin-right: 7px; }
+.buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+.btn { flex: 1; }
+.export-main {
+  padding: 20px;
+  overflow: auto;
+}
+.export-main h2 {
+  font-size: 1.2em;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.preview-table {
+  margin-top: 14px;
+  overflow: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  padding: 10px;
+}
+.preview-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.preview-table th,
+.preview-table td {
+  border: 1px solid var(--border);
+  padding: 7px 8px;
+  font-size: 0.95em;
+}
+.preview-table th {
+  background: var(--accent);
+  color: #fff;
+  position: sticky;
+  top: 0;
+}
+.btn-primary, .btn-outline, .btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover, .btn-outline:hover, .btn:hover {
+  background: var(--accent-hover);
+  color: #fff;
+  border: none;
+}
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+}
+.btn-outline:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Posiciona e estiliza o botão de exportar no canto inferior direito */
+.export-actions {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+}
+
+/* Estilização do botão dentro de export-actions */
+.export-actions .btn {
+  padding: 14px 28px;
+  min-width: 220px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+/* === OVERLAY DE LOADING (EXPORT) === */
+#export-loading-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+#export-loading-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+#export-loading-overlay .loading-box {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+#export-loading-overlay .spinner {
+  margin: 0 auto 15px;
+  width: 40px; height: 40px;
+  border: 4px solid #007bff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+#export-loading-overlay .loading-text {
+  color: #333;
+  font-size: 15px;
+  line-height: 1.4;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.hidden { display: none; }
+
+.options-section .discrete-select {
+  font-size: 0.8em;
+  color: var(--fg-muted);
+  margin-left: 8px;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  background: var(--card);
+}
+
+.preview-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85em;
+  margin-bottom: 8px;
+}
+
+.preview-controls .discrete-select {
+  font-size: 0.85em;
+  padding: 2px 6px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+/* —————————————— */
+/*  Base Sidebar Toggle  */
+/* —————————————— */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1001;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+/* —————————————— */
+/*  Mobile Responsivo  */
+/* —————————————— */
+@media (max-width: 768px) {
+
+  /* Evita scroll horizontal indesejado */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Container vira bloco único */
+  .export-container {
+    display: block;
+  }
+
+  /* Sidebar off-canvas, escondida por padrão */
+  .export-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100vw;           /* completamente fora da tela */
+    width: 100vw;           /* ocupa toda a largura quando aberta */
+    height: 100vh;
+    background: var(--card);
+    padding: 20px 16px;
+    overflow-y: auto;
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+    display: none;          /* oculta totalmente o <aside> */
+  }
+  /* Exibe a sidebar cobrindo tudo quando .open */
+  .export-sidebar.open {
+    display: block;
+    left: 0;
+  }
+
+  /* Esconde o conteúdo principal enquanto a sidebar estiver aberta */
+  .export-sidebar.open ~ .export-main {
+    display: none !important;
+  }
+
+  /* Garante que o main fique visível quando a sidebar estiver fechada */
+  .export-main {
+    display: block;
+    margin-top: 56px;       /* espaço para o toggle */
+    padding: 12px;
+  }
+
+  /* Botão toggle só aparece no mobile */
+  .sidebar-toggle {
+    display: block;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1001;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+
+  /* Ajustes na pré-visualização */
+  .preview-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  /* Botão “Exportar XLSX” sempre flutuando no canto */
+  .export-actions {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1002;
+  }
+}
